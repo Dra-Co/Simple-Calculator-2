@@ -1,8 +1,14 @@
 Simple Calculator program (Flutter, Dart)
 
-Features :
+Featues:
+- Addition
+- Subtraction
+- Multiplication
+- Division
+- History
 
-Basic Form UI
-Responsive
-Note :
-This is a simple form UI (User Interface) using Flutter, absolutely beginner-friendly. I used some basic decoration to make the display prettier. Of course you can freely modify it.-2
+Note : 
+-
+This is a simple Calculator program (2) with responsive design.
+You can use some basic operators in this program.
+Feel free to modify this program.
