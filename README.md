@@ -6,6 +6,7 @@ Featues:
 - Multiplication
 - Division
 - History
+- Responsive
 
 Note : 
 -
