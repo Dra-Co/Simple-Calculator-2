@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -8,7 +10,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: "Simple Calculator",
       theme: ThemeData(primarySwatch: Colors.blueGrey),
       home: Calculator(),
@@ -22,7 +23,7 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  double firstNum, secNum;
+  double firstNum = 0, secNum = 0;
   String display = '', result, operation, history = '';
   void btnOnClick(String btnValue) {
     if (btnValue == "AC") {
@@ -36,6 +37,8 @@ class _CalculatorState extends State<Calculator> {
       secNum = 0;
       display = '';
       result = '';
+    } else if (btnValue == "<") {
+      result = display.substring(0, display.length - 1);
     } else if (btnValue == "/" ||
         btnValue == "X" ||
         btnValue == "-" ||
@@ -47,26 +50,20 @@ class _CalculatorState extends State<Calculator> {
       secNum = double.parse(display);
       if (operation == "/") {
         result = (firstNum / secNum).toString();
-        history =
-            firstNum.toString() + operation.toString() + secNum.toString();
+        history = firstNum.toString() + operation + secNum.toString();
       }
       if (operation == "X") {
         result = (firstNum * secNum).toString();
-        history =
-            firstNum.toString() + operation.toString() + secNum.toString();
+        history = firstNum.toString() + operation + secNum.toString();
       }
       if (operation == "-") {
         result = (firstNum - secNum).toString();
-        history =
-            firstNum.toString() + operation.toString() + secNum.toString();
+        history = firstNum.toString() + operation + secNum.toString();
       }
       if (operation == "+") {
         result = (firstNum + secNum).toString();
-        history =
-            firstNum.toString() + operation.toString() + secNum.toString();
+        history = firstNum.toString() + operation + secNum.toString();
       }
-    } else if (btnValue == "<") {
-      result = display.substring(0, display.length - 1);
     } else if (btnValue == "+/-") {
       if (display[0] != "-") {
         result = "-" + display;
@@ -77,7 +74,7 @@ class _CalculatorState extends State<Calculator> {
       if (display.contains(".")) {
         result = display;
       } else if (display == "") {
-        result = (0).toString() + ".";
+        result = "0.";
       } else {
         result = display + ".";
       }
@@ -92,86 +89,83 @@ class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         leading: Icon(Icons.adb),
-        title: Text("Calculator"),
+        title: Text("Simple Calculator"),
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.fromLTRB(
-                  0, 0, MediaQuery.of(context).size.width * 0.05, 0),
-              child: Text(
-                history,
-                style: TextStyle(
-                  color: Colors.white54,
-                  fontSize: 28,
-                ),
-              ),
+      body: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.fromLTRB(
+                0,
+                MediaQuery.of(context).size.height * 0.02,
+                MediaQuery.of(context).size.width * 0.05,
+                0),
+            child: Text(
+              history,
+              style: TextStyle(fontSize: 28, color: Colors.white54),
             ),
-            Container(
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.fromLTRB(
-                  0,
-                  MediaQuery.of(context).size.height * 0.02,
-                  MediaQuery.of(context).size.width * 0.05,
-                  MediaQuery.of(context).size.height * 0.02),
-              child: Text(
-                display,
-                style: TextStyle(fontSize: 48, color: Colors.white),
-              ),
+          ),
+          Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.fromLTRB(
+                0,
+                MediaQuery.of(context).size.height * 0.02,
+                MediaQuery.of(context).size.width * 0.05,
+                MediaQuery.of(context).size.height * 0.02),
+            child: Text(
+              display,
+              style: TextStyle(fontSize: 48, color: Colors.white),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildContainer("AC", Colors.orange),
-                buildContainer("C", Colors.orange),
-                buildContainer("<", Colors.orange),
-                buildContainer("/", Colors.orange),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildContainer("9", Colors.teal),
-                buildContainer("8", Colors.teal),
-                buildContainer("7", Colors.teal),
-                buildContainer("X", Colors.orange),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildContainer("6", Colors.teal),
-                buildContainer("5", Colors.teal),
-                buildContainer("4", Colors.teal),
-                buildContainer("-", Colors.orange),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildContainer("3", Colors.teal),
-                buildContainer("2", Colors.teal),
-                buildContainer("1", Colors.teal),
-                buildContainer("+", Colors.orange),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildContainer("+/-", Colors.teal),
-                buildContainer("0", Colors.teal),
-                buildContainer(".", Colors.teal),
-                buildContainer("=", Colors.orange),
-              ],
-            ),
-          ],
-        ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildContainer('AC', Colors.orange),
+              buildContainer('C', Colors.orange),
+              buildContainer('<', Colors.orange),
+              buildContainer('/', Colors.orange),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildContainer('9', Colors.teal),
+              buildContainer('8', Colors.teal),
+              buildContainer('7', Colors.teal),
+              buildContainer('X', Colors.orange),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildContainer('6', Colors.teal),
+              buildContainer('5', Colors.teal),
+              buildContainer('4', Colors.teal),
+              buildContainer('-', Colors.orange),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildContainer('3', Colors.teal),
+              buildContainer('2', Colors.teal),
+              buildContainer('1', Colors.teal),
+              buildContainer('+', Colors.orange),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              buildContainer('+/-', Colors.teal),
+              buildContainer('0', Colors.teal),
+              buildContainer('.', Colors.teal),
+              buildContainer('=', Colors.orange),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -189,14 +183,15 @@ class _CalculatorState extends State<Calculator> {
           backgroundColor: color,
           onSurface: Colors.grey,
         ),
+        onPressed: () {
+          btnOnClick(no);
+        },
         child: Text(
           no,
           style: TextStyle(fontSize: 24),
         ),
-        onPressed: () {
-          btnOnClick(no);
-        },
       ),
     );
   }
 }
+
