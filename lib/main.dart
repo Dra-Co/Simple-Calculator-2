@@ -48,21 +48,21 @@ class _CalculatorState extends State<Calculator> {
       result = '';
     } else if (btnValue == "=") {
       secNum = double.parse(display);
-      if (operation == "/") {
-        result = (firstNum / secNum).toString();
+      if (operation != "") {
+        if (operation == "/") {
+          result = (firstNum / secNum).toString();
+        }
+        if (operation == "X") {
+          result = (firstNum * secNum).toString();
+        }
+        if (operation == "-") {
+          result = (firstNum - secNum).toString();
+        }
+        if (operation == "+") {
+          result = (firstNum + secNum).toString();
+        }
         history = firstNum.toString() + operation + secNum.toString();
-      }
-      if (operation == "X") {
-        result = (firstNum * secNum).toString();
-        history = firstNum.toString() + operation + secNum.toString();
-      }
-      if (operation == "-") {
-        result = (firstNum - secNum).toString();
-        history = firstNum.toString() + operation + secNum.toString();
-      }
-      if (operation == "+") {
-        result = (firstNum + secNum).toString();
-        history = firstNum.toString() + operation + secNum.toString();
+        operation = "";
       }
     } else if (btnValue == "+/-") {
       if (display[0] != "-") {
@@ -79,7 +79,11 @@ class _CalculatorState extends State<Calculator> {
         result = display + ".";
       }
     } else {
-      result = double.parse(display + btnValue).toString();
+      if (btnValue == "0") {
+        result = display + "0";
+      } else {
+        result = double.parse(display + btnValue).toString();
+      }
     }
     setState(() {
       display = result;
@@ -194,4 +198,3 @@ class _CalculatorState extends State<Calculator> {
     );
   }
 }
-
